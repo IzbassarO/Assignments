@@ -60,4 +60,17 @@ func main() {
 	weatherStation.Deregister(observer2)
 
 	weatherStation.SetTemperature(32.5)
+
+	observer3 := &WeatherObserver{id: "Observer 3"}
+	observer4 := &WeatherObserver{id: "Observer 4"}
+
+	weatherStation.Register(observer3)
+	weatherStation.Register(observer4)
+
+	weatherStation.SetTemperature(28.0)
+	weatherStation.SetTemperature(29.5)
+
+	weatherStation.Deregister(observer1)
+
+	weatherStation.SetTemperature(27.0)
 }
