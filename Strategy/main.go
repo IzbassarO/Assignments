@@ -2,26 +2,34 @@ package main
 
 import "fmt"
 
-// PaymentStrategy defines the strategy interface
 type PaymentStrategy interface {
 	Pay(amount float64)
 }
 
-// CreditCardPayment is a concrete strategy for credit card payments
 type CreditCardPayment struct{}
 
 func (cc *CreditCardPayment) Pay(amount float64) {
 	fmt.Printf("Paid $%.2f using Credit Card\n", amount)
 }
 
-// PayPalPayment is a concrete strategy for PayPal payments
 type PayPalPayment struct{}
 
 func (pp *PayPalPayment) Pay(amount float64) {
 	fmt.Printf("Paid $%.2f using PayPal\n", amount)
 }
 
-// PaymentContext is the context that uses the selected payment strategy
+type KaspiBankPayment struct{}
+
+func (kb *KaspiBankPayment) Pay(amount float64) {
+	fmt.Printf("Paid $%.2f using Kaspi Bank\n", amount)
+}
+
+type BitcoinPayment struct{}
+
+func (bp *BitcoinPayment) Pay(amount float64) {
+	fmt.Printf("Paid $%.2f using Bitcoin\n", amount)
+}
+
 type PaymentContext struct {
 	strategy PaymentStrategy
 }
@@ -41,10 +49,35 @@ func (pc *PaymentContext) ProcessPayment(amount float64) {
 func main() {
 	creditCard := &CreditCardPayment{}
 	payPal := &PayPalPayment{}
+	kaspiBank := &KaspiBankPayment{}
+	bitcoin := &BitcoinPayment{}
 
+	fmt.Println()
 	context := NewPaymentContext(creditCard)
 	context.ProcessPayment(100.0)
 
+	fmt.Println()
 	context.SetStrategy(payPal)
 	context.ProcessPayment(50.0)
+
+	fmt.Println()
+	context.SetStrategy(kaspiBank)
+	context.ProcessPayment(75.0)
+
+	fmt.Println()
+	context.SetStrategy(bitcoin)
+	context.ProcessPayment(25.0)
+
+	fmt.Println()
+	// Add more SetStrategy calls
+	context.SetStrategy(creditCard)
+	context.ProcessPayment(60.0)
+
+	fmt.Println()
+	context.SetStrategy(payPal)
+	context.ProcessPayment(30.0)
+
+	fmt.Println()
+	context.SetStrategy(kaspiBank)
+	context.ProcessPayment(45.0)
 }
