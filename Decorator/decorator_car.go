@@ -2,13 +2,11 @@ package main
 
 import "fmt"
 
-// Car interface represents the base car.
 type Car interface {
 	Drive() string
 	Cost() float64
 }
 
-// BaseCar is a concrete component representing a basic car.
 type BaseCar struct{}
 
 func (c *BaseCar) Drive() string {
@@ -19,7 +17,6 @@ func (c *BaseCar) Cost() float64 {
 	return 20000.0
 }
 
-// Decorator is the base decorator type that embeds the Car interface.
 type Decorator struct {
 	car Car
 }
@@ -32,7 +29,6 @@ func (d *Decorator) Cost() float64 {
 	return d.car.Cost()
 }
 
-// GPSDecorator is a concrete decorator that adds GPS functionality to the car.
 type GPSDecorator struct {
 	Decorator
 }
@@ -49,7 +45,6 @@ func (d *GPSDecorator) Cost() float64 {
 	return d.car.Cost() + 500.0
 }
 
-// LeatherSeatsDecorator is a concrete decorator that adds leather seats to the car.
 type LeatherSeatsDecorator struct {
 	Decorator
 }
@@ -66,7 +61,6 @@ func (d *LeatherSeatsDecorator) Cost() float64 {
 	return d.car.Cost() + 1000.0
 }
 
-// AlloyWheelsDecorator is a concrete decorator that adds alloy wheels to the car.
 type AlloyWheelsDecorator struct {
 	Decorator
 }
@@ -83,8 +77,7 @@ func (d *AlloyWheelsDecorator) Cost() float64 {
 	return d.car.Cost() + 800.0
 }
 
-// Client code
-func ConfigureCar() {
+func main() {
 	baseCar := &BaseCar{}
 	fmt.Printf("Base Car: %s, Cost: $%.2f\n", baseCar.Drive(), baseCar.Cost())
 
