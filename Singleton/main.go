@@ -6,43 +6,47 @@ import (
 	"strings"
 )
 
-// Struct to represent a geometric shape
 type Shape struct {
 	Type string
 }
 
-// Circle is a struct representing a circle
 type Circle struct {
 	Shape
 	Radius float64
 }
 
-// Rectangle is a struct representing a rectangle
 type Rectangle struct {
 	Shape
 	Width  float64
 	Height float64
 }
 
-// Function to calculate the area of a circle
+type Triangle struct {
+	Shape
+	Base   float64
+	Height float64
+}
+
 func (c Circle) CalculateArea() float64 {
 	return math.Pi * c.Radius * c.Radius
 }
 
-// Function to calculate the area of a rectangle
 func (r Rectangle) CalculateArea() float64 {
 	return r.Width * r.Height
+}
+
+func (t Triangle) CalculateArea() float64 {
+	return 0.5 * t.Base * t.Height
 }
 
 func main() {
 	fmt.Println("Welcome to the Shape Area Calculator!")
 
 	for {
-		fmt.Print("Enter the shape (circle/rectangle) or 'quit' to exit: ")
+		fmt.Print("Enter the shape (circle/rectangle/triangle) or 'quit' to exit: ")
 		var input string
 		fmt.Scanln(&input)
 
-		// Convert input to lowercase for case-insensitive comparison
 		input = strings.ToLower(input)
 
 		if input == "quit" {
@@ -65,8 +69,18 @@ func main() {
 			rectangle := Rectangle{Shape: Shape{Type: "Rectangle"}, Width: width, Height: height}
 			area := rectangle.CalculateArea()
 			fmt.Printf("Area of the rectangle: %.2f\n", area)
+		} else if input == "triangle" {
+			fmt.Print("Enter the base of the triangle: ")
+			var base float64
+			fmt.Scanln(&base)
+			fmt.Print("Enter the height of the triangle: ")
+			var height float64
+			fmt.Scanln(&height)
+			triangle := Triangle{Shape: Shape{Type: "Triangle"}, Base: base, Height: height}
+			area := triangle.CalculateArea()
+			fmt.Printf("Area of the triangle: %.2f\n", area)
 		} else {
-			fmt.Println("Invalid shape. Please enter 'circle' or 'rectangle'.")
+			fmt.Println("Invalid shape. Please enter 'circle', 'rectangle', or 'triangle'.")
 		}
 	}
 }
